@@ -5,6 +5,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "files": ["src/main.js"],
+  "files": ["src/main.jsx"],
   "include": ["src/**/*"]
 }

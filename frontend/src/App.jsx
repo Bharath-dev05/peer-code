@@ -47,6 +47,8 @@ const App = () => {
       setUsers(users);
     });
 
+
+
     socket.on("codeUpdate", (newCode) => {
       setCode(newCode);
     });
@@ -151,7 +153,7 @@ return (
 
   return (
     <div className="editor-container">
-      <div className="sidebar">
+      <div className="sidebar bg-zinc-800">
         <div className="room-info">
           <h2>Code Room: {roomId}</h2>
           <button onClick={copyRoomId} className="copy-button">
