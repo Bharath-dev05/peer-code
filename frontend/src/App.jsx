@@ -21,7 +21,7 @@ import { Home } from "lucide-react";
 
 
 
-const socket = io('http://localhost:3000');
+const socket = io('https://collab-code-editer.onrender.com');
 
 const App = () => {
   const [joined, setJoined] = useState(false);
