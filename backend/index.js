@@ -1,76 +1,3 @@
-// import express from 'express';
-// import http from 'http';
-// import { Server } from 'socket.io';
-
-// const app = express();
-// const server = http.createServer(app);
-// const io = new Server(server,{
-//     cors:{
-//         origin: '*',
-//     },
-// });
-
-// const rooms = new Map();
-
-// io.on("connection",(socket)=>{
-//     console.log("User connected:",socket.id);
-
-//     let currentRoom = null;
-//     let currentUser = null;
-
-//     socket.on("join",({roomId,userName})=>{
-//         if(currentRoom){
-//             socket.leave(currentRoom);
-//             rooms.get(currentRoom).delete(currentUser);
-//             io.to(currentRoom).emit("UserJoined",Array.from(rooms.get(currentRoom))); 
-//         }
-
-//         currentRoom =roomId;
-//         currentUser= userName;
-//         socket.join(roomId);
-//         if(!rooms.has(roomId)){
-//             rooms.set(roomId,new Set());
-//         }
-
-//         rooms.get(roomId).add(userName);
-//         io.to(roomId).emit("UserJoined",Array.from(rooms.get(currentRoom)));
-
-
-//     });
-  
-//     socket.on("codeChange",({roomId,code})=>{
-//         socket.to(roomId).emit("codeUpdate",code);
-//     });
-
-//     socket.on("leaveRoom",()=>{
-//         if(currentRoom && currentUser){
-//             rooms.get(currentUser).delete(currentUser);
-//             io.to(currentRoom).emit("UserJoined",Array.from(rooms.get(currentRoom)));
-        
-//             socket.leave(currentRoom);
-//             currentRoom = null;
-//             currentUser = null;
-        
-//         }
-//     })
-
-//     socket.disconnect(()=>{
-//         if(currentRoom && currentUser){
-//             rooms.get(currentRoom).delete(currentUser);
-//             io.to(currentRoom).emit("UserJoined",Array.from(rooms.get(currentRoom)));
-//         }
-//         console.log("User disconnected:", socket.id);
-        
-//     });
-// })
-
-// const port = process.env.PORT || 3000;
-// server.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-// });
-    
-
-
 
 import express from "express";
 import http from "http";
@@ -151,13 +78,13 @@ io.on("connection", (socket) => {
 
 const port = process.env.PORT || 3000;
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
-// app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 
 server.listen(port, () => {
   console.log("server is working on port 3000");
