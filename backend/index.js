@@ -8,6 +8,23 @@ import axios from "axios";
 const app = express();
 
 const server = http.createServer(app);
+const url=`https://collab-code-editer.onrender.com`;
+
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("website reloded");
+    })
+    .catch((error) => {
+      console.error(`Error : ${error.message}`);
+    });
+}
+
+setInterval(reloadWebsite, interval);
+
 
 const io = new Server(server, {
   cors: {
@@ -101,7 +118,7 @@ const __dirname = path.resolve();
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-app.get("*", (req, res) => {
+app.get("/*splat", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 

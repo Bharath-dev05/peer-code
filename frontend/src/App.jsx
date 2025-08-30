@@ -23,7 +23,8 @@ import { Home } from "lucide-react";
 
 
 
-const socket = io('http://localhost:5000');
+
+const socket = io('https://collab-code-editer.onrender.com');
 
 const App = () => {
   const [joined, setJoined] = useState(false);
@@ -37,20 +38,11 @@ const App = () => {
   const [output, setOutput] = useState("");
   const [version,setVersion]=useState("*");
 
-  // const handleJoinRoom=()=>{
-  //   if(roomId && userName){
-  //     socket.emit("join",{roomId,userName});
-  //     setJoined(true);
-  //   }
-  // }
-
-
 
   useEffect(() => {
     socket.on("userJoined", (users) => {
       setUsers(users);
     });
-
 
 
     socket.on("codeUpdate", (newCode) => {
@@ -133,7 +125,8 @@ const App = () => {
   setOutput(" ");
  }
 
-  if(!joined) {
+
+   if(!joined) {
 return (
    <Card className=" w-full rounded-4xl bg-gray-100  h-96 mt-36 mx-auto  max-w-sm">
   <CardHeader>
@@ -164,7 +157,6 @@ return (
 </Card>
   )
 }
-
 
   return (
     <div className="editor-container  ">
