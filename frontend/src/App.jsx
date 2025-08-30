@@ -12,6 +12,8 @@ import {
   CardTitle,
 
 } from "@/components/ui/card"
+import { Textarea } from "@/components/ui/textarea"
+
 
 
 import { Input } from "@/components/ui/input"
@@ -21,7 +23,7 @@ import { Home } from "lucide-react";
 
 
 
-const socket = io('http://localhost:3000');
+const socket = io('http://localhost:5000');
 
 const App = () => {
   const [joined, setJoined] = useState(false);
@@ -32,6 +34,8 @@ const App = () => {
   const [copySuccess, setCopySuccess] = useState("");
   const [users, setUsers] = useState([]);
   const [typing, setTyping] = useState("");
+  const [output, setOutput] = useState("");
+  const [version,setVersion]=useState("*");
 
   // const handleJoinRoom=()=>{
   //   if(roomId && userName){
@@ -61,6 +65,11 @@ const App = () => {
     socket.on("languageUpdate", (newLanguage) => {
       setLanguage(newLanguage);
     });
+
+    socket.on("codeResponse",(response)=>{
+      setOutput(response.run.output);
+    })
+    
 
     return () => {
       socket.off("userJoined");
@@ -116,11 +125,17 @@ const App = () => {
     socket.emit("languageChange", { roomId, language: newLanguage });
   };
 
- 
+ const runCode=()=>{
+  socket.emit("compileCode",{code,roomId,language,version});
+ }
+
+ const clearConsole=()=>{
+  setOutput(" ");
+ }
 
   if(!joined) {
 return (
-   <Card className=" w-full rounded-4xl bg-gray-100 mx-auto h-96 mt-80 max-w-sm">
+   <Card className=" w-full rounded-4xl bg-gray-100  h-96 mt-36 mx-auto  max-w-sm">
   <CardHeader>
     <CardTitle className="text-center text-4xl">Join Room</CardTitle>
     <CardDescription className="text-center text-lg">create or join room to Collaborate</CardDescription>
@@ -152,8 +167,8 @@ return (
 
 
   return (
-    <div className="editor-container">
-      <div className="sidebar bg-zinc-800">
+    <div className="editor-container  ">
+      <div className="sidebar ml-0.5 my-0.5 rounded-sm bg-zinc-800">
         <div className="room-info">
           <h2>Code Room: {roomId}</h2>
           <button onClick={copyRoomId} className="copy-button">
@@ -178,14 +193,15 @@ return (
           <option value="java">Java</option>
           <option value="cpp">C++</option>
         </select>
-        <button className="leave-button" onClick={leaveRoom}>
+        <Button className="leave-button" onClick={leaveRoom}>
           Leave Room
-        </button>
+        </Button>
       </div>
 
-      <div className="editor-wrapper">
+      <div className="editor-wrapper  flex flex-col w-full mt-0.5 mx-0.5">
         <Editor
-          height={"100%"}
+          className="ml-0.5 "
+          height={"60%"}
           defaultLanguage={language}
           language={language}
           value={code}
@@ -196,6 +212,17 @@ return (
             fontSize: 14,
           }}
         />
+        <div className="flex gap-2 ml-0.5 ">
+        <Button className="run-button my-1 ml-0.1 bg-green-600 " onClick={runCode}>Execute</Button>
+          <Button className=" my-1 " variant="" onClick={clearConsole}> clear console</Button>
+        </div>
+        <Textarea className=" grow min-w-45 bg-zinc-800 text-white h-60"
+         readOnly 
+         value={output}
+         placeholder="Output Console"
+         >
+hello
+        </Textarea>
       </div>
     </div>
   );
