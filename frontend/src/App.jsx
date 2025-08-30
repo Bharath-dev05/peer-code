@@ -213,7 +213,7 @@ return (
          value={output}
          placeholder="Output Console"
          >
-hello
+
         </Textarea>
       </div>
     </div>
