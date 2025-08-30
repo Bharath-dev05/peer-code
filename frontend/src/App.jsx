@@ -117,6 +117,7 @@ const App = () => {
     socket.emit("languageChange", { roomId, language: newLanguage });
   };
 
+  //compiling
  const runCode=()=>{
   socket.emit("compileCode",{code,roomId,language,version});
  }
@@ -125,6 +126,7 @@ const App = () => {
   setOutput(" ");
  }
 
+// console.log(language);
 
    if(!joined) {
 return (
