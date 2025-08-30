@@ -33,20 +33,11 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [typing, setTyping] = useState("");
 
-  // const handleJoinRoom=()=>{
-  //   if(roomId && userName){
-  //     socket.emit("join",{roomId,userName});
-  //     setJoined(true);
-  //   }
-  // }
-
-
 
   useEffect(() => {
     socket.on("userJoined", (users) => {
       setUsers(users);
     });
-
 
 
     socket.on("codeUpdate", (newCode) => {
@@ -116,9 +107,7 @@ const App = () => {
     socket.emit("languageChange", { roomId, language: newLanguage });
   };
 
- 
-
-  if(!joined) {
+   if(!joined) {
 return (
    <Card className=" w-full rounded-4xl bg-gray-100 mx-auto h-96 mt-80 max-w-sm">
   <CardHeader>
@@ -149,7 +138,6 @@ return (
 </Card>
   )
 }
-
 
   return (
     <div className="editor-container">
